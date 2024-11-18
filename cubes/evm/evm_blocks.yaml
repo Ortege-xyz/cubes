@@ -1,0 +1,95 @@
+cubes:
+  - name: evm_blocks
+    sql_table: bigquery-public-data.blockchain_analytics_ethereum_mainnet_us.blocks
+    data_source: bqus
+    
+    measures:
+      - name: latest_block
+        type: max
+        sql: block_number
+        
+      - name: total_gas_used
+        type: sum
+        sql: gas_used
+        
+      - name: total_transactions
+        type: sum
+        sql: transaction_count
+        
+    dimensions:
+      - name: block_number
+        sql: block_number
+        type: number
+        
+      - name: block_timestamp
+        sql: TIMESTAMP(block_timestamp)
+        type: time
+        
+      - name: block_date
+        sql: DATE(block_timestamp)
+        type: time
+        
+      - name: gas_used
+        sql: gas_used
+        type: number
+        
+      - name: transaction_count
+        sql: transaction_count
+        type: number
+        
+      - name: blockchain
+        sql: 'ethereum'
+        type: string
+
+# Individual blockchain cubes
+  - name: ethereum
+    extends: evm_blocks
+    sql_table: bigquery-public-data.blockchain_analytics_ethereum_mainnet_us.blocks
+    
+  - name: arbitrum
+    extends: evm_blocks
+    sql_table: bigquery-public-data.goog_blockchain_arbitrum_one_us.blocks
+    dimensions:
+      - name: blockchain
+        sql: 'arbitrum'
+        type: string
+    
+  - name: avalanche
+    extends: evm_blocks
+    sql_table: bigquery-public-data.goog_blockchain_avalanche_contract_chain_us.blocks
+    dimensions:
+      - name: blockchain
+        sql: 'avalanche'
+        type: string
+    
+  - name: cronos
+    extends: evm_blocks
+    sql_table: bigquery-public-data.goog_blockchain_cronos_mainnet_us.blocks
+    dimensions:
+      - name: blockchain
+        sql: 'cronos'
+        type: string
+    
+  - name: fantom
+    extends: evm_blocks
+    sql_table: bigquery-public-data.goog_blockchain_fantom_opera_us.blocks
+    dimensions:
+      - name: blockchain
+        sql: 'fantom'
+        type: string
+    
+  - name: optimism
+    extends: evm_blocks
+    sql_table: bigquery-public-data.goog_blockchain_optimism_mainnet_us.blocks
+    dimensions:
+      - name: blockchain
+        sql: 'optimism'
+        type: string
+    
+  - name: polygon
+    extends: evm_blocks
+    sql_table: bigquery-public-data.goog_blockchain_polygon_mainnet_us.blocks
+    dimensions:
+      - name: blockchain
+        sql: 'polygon'
+        type: string

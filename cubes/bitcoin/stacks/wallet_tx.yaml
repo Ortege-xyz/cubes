@@ -1,0 +1,41 @@
+cubes:
+  - name: stacks_wallet_tx
+    sql_table: transactions
+    data_source: stacks
+    title: "Stacks Wallet Transactions"
+    description: "Analyzes wallet activity including fees, transaction counts, active days, and dapp interactions"
+
+    measures:
+      - name: gas_paid
+        sql: fee_rate
+        type: sum
+        title: "Total Fees"
+        description: "Sum of all transaction (gas) fees"
+
+      - name: transaction_count
+        type: count
+        title: "Total Transactions"
+        description: "Count of all transactions"
+
+      - name: active_days
+        sql: "DATE(FROM_UNIXTIME(block_timestamp))"
+        type: count_distinct
+        title: "Active Days"
+        description: "Number of unique days the wallet has been active"
+
+      - name: dapp_count
+        sql: "json_extract_string(contract_call, '$.contract_id')"
+        type: count_distinct
+        title: "Unique DApps"
+        description: "Number of unique smart contracts (DApps) interacted with"
+
+    dimensions:
+      - name: sender_address
+        sql: sender_address
+        type: string
+        title: "Wallet Address"
+        
+      - name: tx_date
+        sql: "FROM_UNIXTIME(block_timestamp)"
+        type: time
+        title: "Transaction Date"

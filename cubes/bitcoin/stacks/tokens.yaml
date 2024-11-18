@@ -1,0 +1,21 @@
+cubes:
+  - name: stacks_tokens
+    sql_table: tokens
+    data_source: stacks
+    
+    dimensions:
+      - name: contract_id
+        sql: contract_id
+        type: string
+      
+      - name: name
+        sql: name
+        type: string
+
+      - name: symbol
+        sql: symbol
+        type: string
+      
+      - name: decimals
+        sql: decimals
+        type: string

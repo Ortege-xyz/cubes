@@ -1,0 +1,166 @@
+cubes:
+  - name: stacks_pox_burnt
+    sql_table: l2_stacks_transactions_rewards
+    data_source: bitcoin
+    description: "Returns BTC, denominated in Satoshis burnt as part of Stacks PoX"
+
+    measures:
+      - name: amount
+        sql: value
+        type: sum
+        title: "Sum of Satoshis burnt as part of Stacks PoX"
+    
+      - name: amount_usd
+        sql: value_usd
+        type: sum
+
+    dimensions:
+      - name: block_number
+        sql: block_height
+        type: number
+        title: "Bitcoin Block Number"
+
+      - name: block_date
+        sql: block_date
+        type: time
+        title: "Bitcoin Block date"
+    
+      - name: cycle
+        sql: cycle
+        type: number
+        title: "Stacks Cycle"
+      
+      - name: address
+        sql: address
+        type: string
+        title: "Bitcoin Address"
+
+      - name: bitcoin_script
+        sql: script_pub_key_asm
+        type: string
+        title: "Bitcoin Assembly Language Script"
+
+  - name: stacks_pox_rewards
+    sql_table: l2_stacks_transactions_rewards
+    data_source: bitcoin
+    title: "Stacks Proof of Transfer Rewards"
+    description: "Returns BTC, denominated in Satoshis paid in rewards to PoX stackers"
+
+    measures:
+      - name: amount
+        sql: value
+        type: sum
+        title: "Sum of Satoshis allocated to PoX rewards"
+    
+      - name: amount_usd
+        sql: value_usd
+        type: sum
+        title: "Value of BTC for PoX rewards in US Dollars"
+        description: "The Exchange rate between BTC and US Dollar is taken as an average on the day the transaction occured."
+
+    dimensions:
+      - name: block_number
+        sql: block_height
+        type: number
+        title: "Bitcoin block number"
+
+      - name: block_date
+        sql: block_date
+        type: time
+        title: "Block date"
+    
+      - name: cycle
+        sql: cycle
+        type: number
+        title: "Stacks Cycle"
+        description: "Stacks cycle last for 2100 Bitcoin blocks, or approximately 2 weeks."
+      
+      - name: address
+        sql: address
+        type: string
+        title: "Bitcoin address"
+
+      - name: bitcoin_script
+        sql: script_pub_key_asm
+        type: string
+        title: "Bitcoin Assembly Language Script"
+
+  - name: stacks_stacked_stx_details
+    sql_table: stacked_stx_expanded
+    data_source: stacks
+
+    measures:
+      - name: stacked_amount
+        sql: amount
+        type: sum
+        title: "Total Stacked"
+        description: "The sum of STX that have been stacked."
+
+      - name: usd_amount
+        sql: amount_usd
+        type: sum
+        title: "Total Stacked in USD"
+        description: "The amount of stacked STX converted to USD. The conversion of STX to USD occurs on the transaction date at the Daily Average Price."
+
+    dimensions:
+      - name: cycle
+        sql: cycle
+        type: number
+        title: "Stacks cycle"
+
+      - name: tx_date
+        sql: tx_date
+        type: time
+        title: "Transaction date"
+
+      - name: hash
+        sql: hash
+        type: string
+        title: "Transaction Hash. This is the unique identifier of the transaction that initiated the Stacking"
+
+      - name: pox_addr
+        sql: hashbytes
+        type: string
+        title: "Bitcoin undecoded address to receive stacking rewards"
+
+      - name: contract_id
+        sql: contract_id
+        type: string
+        title: "Contract that initiated the Stacking transaction"
+
+      - name: function_name
+        sql: function_name
+        type: string
+        title: "The function name from the initiating Clarity smart contract"
+
+      - name: contract_id_called
+        sql: contract_id_called
+        type: string
+        title: "The PoX contract that has been called. Please note this can be different from the contract that initiates the Stacking"
+
+      - name: stacking_type
+        sql: name
+        type: string
+        title: "The type of Stacking transaction. This is determined by the function called on the PoX smart contract"
+
+  - name: stacks_stacked_stx
+    sql_table: stacked_stx_from_sc
+    data_source: stacks
+    title: "Stacked STX as per PoX smart contract"
+    description: "Stacked STX by cycle pulled directly from the Clarity Smart Contract."
+
+    measures:
+      - name: stacked_amount
+        sql: total_ustx
+        type: sum
+
+    dimensions:
+      - name: sender_address
+        sql: stacker_address
+        type: string
+      
+      - name: cycle
+        sql: cycle
+        type: number
+        title: "Stacks Cycle"
+        description: "Stacks cycles last for 2100 Bitcoin blocks, that is approximately 2 weeks."

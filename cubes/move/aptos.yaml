@@ -1,0 +1,21 @@
+cubes:
+  - name: aptos
+    sql_table: bigquery-public-data.crypto_aptos_mainnet_us.blocks
+    data_source: bqus
+    measures:
+      - name: latest_block
+        type: max
+        sql: block_height
+    dimensions:
+      - name: block_number
+        sql: block_height
+        type: number
+      - name: block_timestamp
+        sql: TIMESTAMP(block_timestamp)
+        type: time
+      - name: block_date
+        sql: DATE(block_timestamp)
+        type: time
+      - name: blockchain
+        sql: 'aptos'
+        type: string

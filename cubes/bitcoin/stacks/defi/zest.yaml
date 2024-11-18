@@ -1,0 +1,106 @@
+cubes:
+  - name: stacks_dapp_zest_positions_net
+    sql_table: dapp_zest_positions_net
+    data_source: stacks
+
+    measures:
+      - name: total_supply
+        sql: total_supply
+        type: sum
+        title: "Total Supplied of asset after decimal conversion in Asset value"
+
+      - name: total_borrow
+        sql: total_borrow
+        type: sum
+        title: "Total borrowed of asset after decimal conversion in Asset value"
+        
+      - name: total_repaid
+        sql: total_repaid
+        type: sum
+        title: "Total repaid of asset after decimal conversion in Asset value"
+      
+      - name: total_supply_usd
+        sql: total_supply_usd
+        type: sum
+        title: "Total Supplied of Asset in USD"
+        description: "This total is converted to USD terms at the latest price received from the Arkadiko Oracle SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-oracle-v2-3"
+
+      - name: total_borrow_usd
+        sql: total_borrow_usd
+        type: sum
+        title: "Total borrowed of asset after decimal conversion in Asset value"
+        description: "This total is converted to USD terms at the latest price received from the Arkadiko Oracle SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-oracle-v2-3"
+        
+      - name: total_repaid_usd
+        sql: total_repaid_usd
+        type: sum
+        title: "Total repaid of asset after decimal conversion in Asset value"
+        description: "This total is converted to USD terms at the latest price received from the Arkadiko Oracle SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-oracle-v2-3"
+
+    dimensions:
+      - name: lender_address
+        sql: sender_address
+        type: string
+        title: "Lender address"
+      
+      - name: asset_id
+        sql: asset_id
+        type: string
+        title: "Asset ID"
+
+  - name: stacks_dapp_zest_positions
+    sql_table: dapp_zest_positions
+    data_source: stacks
+
+    measures:
+      - name: raw_amount
+        sql: asset_amount
+        type: sum
+        title: "Raw amount of asset"
+        description: "The amount of the asset before decimals have been applied. "
+
+      - name: adjusted_amount
+        sql: adjusted_amount
+        type: sum
+        title: "Asset amount after decimals"
+        description: "The amount of the asset after we've taken into account the decimals supplied from the Oracle."
+
+    dimensions:
+      - name: hash
+        sql: hash
+        type: string
+        title: "Transaction hash"
+
+      - name: tx_date
+        sql: tx_date
+        type: time
+
+      - name: sender_address
+        sql: sender_address
+        type: string
+        title: "Sender Address"
+
+      - name: tx_type
+        sql: tx_type
+        type: string
+        title: "Transaction Type"
+        description: "Can be either supply, mint, burn, withdraw, repay or borrow. To calculate the Loan to Value (LTV), the formula is (borrow - repay) / supply"
+
+      - name: asset_id
+        sql: asset_id
+        type: string
+        title: "Asset ID"
+
+      - name: asset_price
+        sql: actual_price
+        type: number
+        title: "Current price of asset"
+
+      - name: asset_price_date
+        sql: price_date
+        type: time
+        title: "Datetime of when Oracle price was updated"
+
+      - name: asset_decimals
+        sql: decimals
+        type: number

@@ -1,0 +1,54 @@
+cubes:
+  - name: stacks_contract_events
+    sql_table: contract_calls
+    data_source: stacks
+
+    measures:
+      - name: fee
+        sql: fee_rate
+        type: sum
+      
+      - name: asset_amount
+        sql: asset_amount
+        type: sum
+
+    dimensions:
+      - name: sender_address
+        sql: sender_address
+        type: string
+      
+      - name: tx_date
+        sql: tx_date
+        type: time
+
+      - name: contract_id
+        sql: contract_id
+        type: string
+      
+      - name: block_number
+        sql: block_number
+        type: number
+
+      - name: function_name
+        sql: function_name
+        type: string
+      
+      - name: event_type
+        sql: event_type
+        type: string
+
+      - name: asset_event_type
+        sql: asset_event_type
+        type: string
+      
+      - name: asset_id
+        sql: asset_id
+        type: string
+
+      - name: asset_recipient
+        sql: asset_recipient
+        type: string
+      
+      - name: contract_log
+        sql: contract_log
+        type: string

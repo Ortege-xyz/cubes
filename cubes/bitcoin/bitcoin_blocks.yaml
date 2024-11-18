@@ -1,0 +1,59 @@
+cubes: 
+  - name: bitcoin_like_blocks
+    sql_table: bigquery-public-data.crypto_bitcoin.blocks
+    data_source: bqus
+    
+    measures:
+      - name: latest_block
+        type: max
+        sql: number
+        
+      - name: total_transactions
+        type: sum
+        sql: transaction_count
+        
+    dimensions:
+      - name: number
+        sql: number
+        type: number
+        
+      - name: block_timestamp
+        sql: TIMESTAMP(timestamp)
+        type: time
+        
+      - name: block_date
+        sql: DATE(timestamp)
+        type: time
+        
+      - name: transaction_count
+        sql: transaction_count
+        type: number
+        
+      - name: blockchain
+        sql: 'bitcoin'
+        type: string
+
+  - name: bitcoin_cash
+    extends: bitcoin_like_blocks
+    sql_table: bigquery-public-data.crypto_bitcoin_cash.blocks
+    dimensions:
+      - name: blockchain
+        sql: 'bitcoin_cash'
+        type: string
+    
+  - name: dogecoin
+    extends: bitcoin_like_blocks
+    sql_table: bigquery-public-data.crypto_dogecoin.blocks
+    dimensions:
+      - name: blockchain
+        sql: 'dogecoin'
+        type: string
+    
+  - name: litecoin
+    extends: bitcoin_like_blocks
+    sql_table: bigquery-public-data.crypto_litecoin.blocks
+    dimensions:
+      - name: blockchain
+        sql: 'litecoin'
+        type: string
+

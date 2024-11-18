@@ -1,0 +1,9 @@
+cubes:
+  - name: stacks
+    sql_table: blocks
+    data_source: stacks
+
+    measures:
+      - name: latest_block
+        sql: number
+        type: max

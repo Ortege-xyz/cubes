@@ -1,0 +1,13 @@
+cubes:
+  - name: ethereum_transactions
+    sql_table: bigquery-public-data.blockchain_analytics_ethereum_mainnet_us.transactions
+    data_source: bqus
+
+    measures:
+      - name: count
+        type: count
+
+    dimensions:
+      - name: block_number
+        sql: block_number
+        type: number

@@ -1,0 +1,18 @@
+cubes:
+  - name: prices
+    sql_table: prices
+    data_source: pricing
+
+    measures:
+      - name: avg_price
+        sql: price
+        type: avg
+
+    dimensions:
+      - name: symbol
+        sql: symbol
+        type: string
+        
+      - name: timedate
+        sql: "FROM_UNIXTIME(timestamp)"
+        type: time

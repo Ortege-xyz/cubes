@@ -1,0 +1,28 @@
+cubes:
+  - name: solana
+    sql_table: bigquery-public-data.crypto_solana_mainnet_us.blocks
+    data_source: bquscentral1
+    
+    measures:
+      - name: latest_block
+        type: max
+        sql: height
+      - name: total_transactions
+        type: sum
+        sql: ${transaction_count}
+    dimensions:
+      - name: block_number
+        sql: height
+        type: number
+      - name: block_timestamp
+        sql: TIMESTAMP(block_timestamp)
+        type: time
+      - name: block_date
+        sql: DATE(block_timestamp)
+        type: time
+      - name: transaction_count
+        sql: transaction_count
+        type: number
+      - name: blockchain
+        sql: 'solana'
+        type: string

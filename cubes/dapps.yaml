@@ -1,0 +1,34 @@
+cubes:
+  - name: dapps_dl
+    sql_table: dl_protocols_exploded
+    data_source: dapps
+
+    measures:
+      - name: avg_tvl
+        sql: tvl
+        type: avg
+      
+      - name: avg_mcap
+        sql: mcap
+        type: avg
+
+    dimensions:
+      - name: snapshot_timedate
+        sql: listedAt
+        type: time
+        
+      - name: symbol
+        sql: symbol
+        type: string
+      
+      - name: name
+        sql: name
+        type: string
+
+      - name: category
+        sql: category
+        type: string
+      
+      - name: chain
+        sql: chain
+        type: string

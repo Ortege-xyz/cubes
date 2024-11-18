@@ -1,0 +1,13 @@
+cubes:
+  - name: stellar_blocks
+    sql_table: ledgers
+    data_source: stellar
+
+    dimensions:
+      - name: block_height
+        sql: sequence
+        type: number
+
+      - name: timestamp
+        sql: "FROM_UNIXTIME(timestamp)"
+        type: time

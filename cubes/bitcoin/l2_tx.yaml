@@ -1,0 +1,31 @@
+cubes:
+  - name: bitcoin_l2_tx
+    sql_table: l2_stacks_transactions
+    data_source: bitcoin
+    title: "Bitcoin L2 Transactions"
+    description: "Returns Stacks transactions identified by OP_RETURN code of X2. In future will return all Bitcoin L2s"
+
+    measures:
+      - name: amount
+        sql: value
+        type: sum
+        title: "Sum of Satoshis"
+        description: "This includes all amounts in the same transaction. Since a transaction may have numerous outputs, all the outputs Satoshis are included in this figure."
+
+    dimensions:
+      - name: block_number
+        sql: block_height
+        type: number
+        title: "Bitcoin's block number"
+      
+      - name: address
+        sql: address
+        type: string
+        title: "Bitcoin address"
+        description: "The Bitcoin address that initiated the transaction"
+
+      - name: bitcoin_script
+        sql: script_asm
+        type: string
+        title: "Bitcoin Script in Assembly Language"
+  

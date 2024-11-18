@@ -1,0 +1,27 @@
+cubes:
+  - name: sui
+    sql_table: bigquery-public-data.crypto_sui_mainnet_us.checkpoint
+    data_source: bqus
+
+    measures:
+      - name: latest_block
+        type: max
+        sql: sequence_number
+
+    dimensions:
+      - name: block_number
+        sql: sequence_number
+        type: number
+      - name: block_timestamp
+        sql: TIMESTAMP_MILLIS(timestamp_ms)
+        type: time
+      - name: gas_used
+        sql: total_gas_cost
+        type: number
+      - name: transaction_count
+        sql: total_transactions
+        type: number
+      - name: blockchain
+        sql: 'sui'
+        type: string
+

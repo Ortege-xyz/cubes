@@ -1,0 +1,24 @@
+cubes:
+  - name: stacks_oracle_prices
+    sql_table: oracle_prices
+    data_source: stacks
+    title: "Oracles prices"
+    description: "Stacks Oracle Price feeds. Currently supporting Arkadiko but will soon support Dia."
+  
+    measures:   
+      - name: price
+        sql: actual_price
+        type: avg
+    
+    dimensions:
+      - name: tx_date
+        sql: tx_date
+        type: time
+
+      - name: contract_id
+        sql: contract_id
+        type: string
+    
+      - name: token
+        sql: token_name
+        type: string
